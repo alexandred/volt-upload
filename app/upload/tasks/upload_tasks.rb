@@ -1,6 +1,6 @@
 class UploadTasks < Volt::Task
-  def upload(data)
-    store._uploads << {data: data}
-    store._uploads.last.id
+  def upload(parent, id, association, data)
+  	model = store.get(parent.to_sym.underscore.pluralize).where(id: id).first.sync
+  	Attachment.save_data(model, association.to_sym, data).id
   end
 end

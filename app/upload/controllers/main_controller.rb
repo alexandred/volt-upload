@@ -17,7 +17,17 @@ module Upload
       64.times.map { alpha.sample }.join
     end
 
-    def upload
+    def upload(collection, association)
+      collection.then do |a|
+        @model_class = a.class.to_s.to_sym
+        @model_id = a.id
+        @association = association
+
+        initiate_file_reader
+      end
+    end
+
+    def initiate_file_reader
       %x{
         var reader = new FileReader();
 
@@ -47,8 +57,9 @@ module Upload
     end
 
     def save_upload
-      data = `$( #{@id} ).data('data-url')`
-      UploadTasks.upload(data).then {|r| `console.log( #{r} );`}
+        data = `$( #{@id} ).data('data-url')`
+        UploadTasks.upload(@model_class, @model_id, @association, data).then {|r| `console.log( #{r} );`}
     end
+    
   end
 end

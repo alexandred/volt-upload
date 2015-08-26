@@ -1,0 +1,1 @@
+require 'upload/lib/upload'
