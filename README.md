@@ -77,7 +77,7 @@ You must provide a configuration file for your Cloudinary cloud. volt-upload exp
 
 volt-upload provides a 'cloudinary_url' (instead of url) helper to generate a URL using Cloudinary transforms. For example:
 
-	`cloudinary_url(width: 50, height: 50, gravity: "face", crop: "fill")`
+	`cloudinary_url(size: "50x50", gravity: "face", crop: "fill")`
 
 will generate a URL for an image that is 50x50 pixels^2 with face detection.
 
