@@ -57,37 +57,37 @@ If you want to provide a custom `StorageBase` class, you can just pass the colle
 
 ## Usage
 
-	Continuing the user example, we will add an input field for the picture attachment for the current user. Add the following to the relevant form:
+Continuing the user example, we will add an input field for the picture attachment for the current user. Add the following to the relevant form:
 
 	<:upload:main collection="{{ Volt.current_user }}" attachment="picture"/>
 
-	To show the image after a successful upload (attachments stored in the cloudinary container require a refresh to show), you can use the following:
+To show the image after a successful upload (attachments stored in the cloudinary container require a refresh to show), you can use the following:
 
 	{{ raw Volt.current_user.picture.then {|picture| "#{picture.url}" } }}
 
-	This binding will be simplified greatly in future versions.
+This binding will be simplified greatly in future versions.
 
 ## Local Storage
 
-	Attachments that are saved in the local container are currently saved in "app/{component name}/assets/static". This will be changed to "public" in future versions.
+Attachments that are saved in the local container are currently saved in "app/{component name}/assets/static". This will be changed to "public" in future versions.
 
 ## Cloudinary
 
-	You must provide a configuration file for your Cloudinary cloud. volt-upload expects to find it at "config/cloudinary.yml". To download an automatically generated config file, visit this page: https://cloudinary.com/console/cloudinary.yml
+You must provide a configuration file for your Cloudinary cloud. volt-upload expects to find it at "config/cloudinary.yml". To download an automatically generated config file, visit this page: https://cloudinary.com/console/cloudinary.yml
 
-	volt-upload provides a 'cloudinary_url' (instead of url) helper to generate a URL using Cloudinary transforms. For example:
+volt-upload provides a 'cloudinary_url' (instead of url) helper to generate a URL using Cloudinary transforms. For example:
 
 	`cloudinary_url(width: 50, height: 50, gravity: "face", crop: "fill")`
 
-	will generate a URL for an image that is 50x50 pixels^2 with face detection.
+will generate a URL for an image that is 50x50 pixels^2 with face detection.
 
 
 ## Help
 	
-	If you have any problems with this component, feel free to contact @alexandred at gitter.im/voltrb/volt.
+If you have any problems with this component, feel free to contact @alexandred at gitter.im/voltrb/volt.
 
 ## Credits
 
-	* Ryan Stout for the fantastic Volt framework
-	* Andrew Caroll for the base uploading functionality and inspiration
-	* The rest of the Volt framework contributors
+* Ryan Stout for the fantastic Volt framework
+* Andrew Caroll for the base uploading functionality and inspiration
+* The rest of the Volt framework contributors
