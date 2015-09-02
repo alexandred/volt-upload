@@ -41,9 +41,9 @@ A default container for the storage can be provided as follows:
 	default_container :db
 
 The supported containers are:
-	* `db` - database
-	* `local` - local storage
-	* 'cloudinary' - in a cloudinary cloud
+* `db` - database
+* `local` - local storage
+* `cloudinary` - in a cloudinary cloud
 
 We now have to complement the storage logic inside the user collection. Insert the following into your component's user collection:
 
