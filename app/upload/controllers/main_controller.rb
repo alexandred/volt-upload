@@ -17,18 +17,24 @@ module Upload
       64.times.map { alpha.sample }.join
     end
 
-    def upload(collection, association)
-      collection.then do |a|
-        @model_class = a.class.to_s.to_sym
-        @model_id = a.id
-        @association = association
+    def upload(args = {})
+      @collection = args["collection"]
+      @buffer = args["buffer"]
+      @association = args["association"]
 
+      if @collection
+        @collection.then do |a|
+          @model_class = a.class.to_s.to_sym
+          @model_id = a.id
+          initiate_file_reader
+        end
+      else
         initiate_file_reader
       end
     end
 
     def initiate_file_reader
-      %x{
+      `
         var reader = new FileReader();
 
         reader.onload = function(e) {
@@ -36,29 +42,19 @@ module Upload
           $( #{@id} ).data('data-url', dataURL)
           #{ save_upload }
         }
-
-
-        reader.onprogress = function (event) {
-         if (event.lengthComputable) {
-             var percentage = Math.round (event.loaded / event.total * 100);
-             $(".prog_#{id}").css({width: percentage+'%'})
-          }
-        }
-       
-        reader.onloadend = function (event) {
-         if (event.lengthComputable) {
-             $(".prog_#{id}").css({width: '100%'})
-          }
-        }
         
 
         reader.readAsDataURL($( #{@id} )[0].files[0])
-      }
+      `
     end
 
     def save_upload
-        data = `$( #{@id} ).data('data-url')`
-        UploadTasks.upload(@model_class, @model_id, @association, data).then {|r| `console.log( #{r} );`}
+      data = `$( #{@id} ).data('data-url')`
+      if @collection
+        UploadTasks.upload(@model_class, @model_id, @association, data)
+      else
+        @buffer.send("_#{@association}_buffer=", data)
+      end
     end
     
   end
