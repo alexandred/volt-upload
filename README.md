@@ -5,12 +5,6 @@ File upload support for Volt. Supports storing to the database, local storage an
 ## Installation
 You must first add the following line to your application's Gemfile:
 
-	gem 'cloudinary_gem', github: "alexandred/cloudinary_gem"
-
-In the future (once a few issues have been sorted), this should be unecessary.
-
-Add this line to your application's Gemfile:
-
     gem 'volt-upload', github: "alexandred/volt-upload"
 
 And then execute:
@@ -73,7 +67,7 @@ Attachments that are saved in the local container are currently saved in "app/{c
 
 ## Cloudinary
 
-You must provide a configuration file for your Cloudinary cloud. volt-upload expects to find it at "config/cloudinary.yml". To download an automatically generated config file, visit this page: https://cloudinary.com/console/cloudinary.yml
+You must provide a configuration file if you intend to use Cloudinary. volt-upload expects to find it at "config/cloudinary.yml". To download an automatically generated config file, visit this page: https://cloudinary.com/console/cloudinary.yml
 
 volt-upload provides a 'cloudinary_url' (instead of url) helper to generate a URL using Cloudinary transforms. For example:
 
