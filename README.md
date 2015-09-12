@@ -71,9 +71,31 @@ You must provide a configuration file if you intend to use Cloudinary. volt-uplo
 
 volt-upload provides a 'cloudinary_url' (instead of url) helper to generate a URL using Cloudinary transforms. For example:
 
-	`cloudinary_url(size: "50x50", gravity: "face", crop: "fill")`
+	cloudinary_url(size: "50x50", gravity: "face", crop: "fill")
 
 will generate a URL for an image that is 50x50 pixels^2 with face detection.
+
+## Buffers
+
+Using a buffer with volt-upload is easy. Following the user example, create a buffer for your user in the relevant action for the page:
+
+	page._user_buffer = store.users.buffer
+
+Then insert the following into the user form:
+
+	<:upload:main buffer="{{ page._user_buffer }}" attachment="picture"/>
+
+To access the buffered image (before it has been uploaded), you can use the following binding:
+
+	{{ raw page._user_buffer._picture_buffer }}
+
+We can now save the user and persist the images in the form callback:
+
+	page._user_buffer.save! do |user|
+		user.save_buffered_attachments([:picture])
+	end
+
+Note that buffers are currently only supported on singular attachments for the moment.
 
 
 ## Help
