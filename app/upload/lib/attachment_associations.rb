@@ -4,6 +4,11 @@ module Volt
 			def saves(association, options={})
 				collection ||= options.fetch(:for)
 				container ||= options.fetch(:in, self.get_default_container)
+
+				if container == :cloudinary && !Volt.config.public.cloudinary
+					raise NameError, "to use the cloudinary container, you must specify a cloudinary.yml in your config directory"
+				end
+
 				key = "#{collection.underscore.singularize}_id"
 				field(key)
 				field("association_name")

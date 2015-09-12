@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "volt", "~> 0.9.3"
   spec.add_development_dependency "rake"
-  spec.add_runtime_dependency "cloudinary"
+  spec.add_dependency "cloudinary"
 end
