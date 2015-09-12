@@ -5,6 +5,8 @@ class StorageBase < Volt::Model
 
 	field :data, String
 	field :container, String
+	field :format, String
+
 	@@container_hash = {}
 
 	def self.get_default_container
@@ -49,7 +51,11 @@ class StorageBase < Volt::Model
 			data_format = data[2]
 			data_file = data[3]
 
-			File.open("app/main/assets/static/#{model.id}.#{data_format}", "wb") do |f|
+			model.format = data_format
+
+			Dir.mkdir("public") unless File.exists?("public")
+
+			File.open("public/#{model.id}.#{data_format}", "wb") do |f|
 				f.truncate(0)
 				f.write Base64.decode64(data_file)
 			end
@@ -67,10 +73,10 @@ class StorageBase < Volt::Model
 			when "db"
 				return self.data
 			when "local"
-				return "/app/main/assets/static/#{self.id}"
+				return "#{self.id}.#{self.format}"
 			when "cloudinary"
 				cloudinary_id = self.id
-				return `$.cloudinary.image(cloudinary_id)[0].outerHTML`
+				return `$.cloudinary.image(cloudinary_id).attr("src")`
 		end
 	end
 
@@ -80,7 +86,7 @@ class StorageBase < Volt::Model
 		end
 		cloudinary_id = self.id
 		cloudinary_options = options.to_n
-		return `$.cloudinary.image(cloudinary_id, cloudinary_options)[0].outerHTML`
+		return `$.cloudinary.image(cloudinary_id, cloudinary_options).attr("src")`
 	end
 
 	def self.get_attachment_container(model, association)

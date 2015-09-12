@@ -63,7 +63,7 @@ This binding will be simplified greatly in future versions.
 
 ## Local Storage
 
-Attachments that are saved in the local container are currently saved in "app/{component name}/assets/static". This will be changed to "public" in future versions.
+Attachments that are stored in the local container are saved in the `public` folder.
 
 ## Cloudinary
 
