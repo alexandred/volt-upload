@@ -10,7 +10,7 @@ class StorageBase < Volt::Model
 	@@container_hash = {}
 
 	def self.get_default_container
-		@@default_container
+		@@default_container || :db
 	end
 	
 	def self.default_container(container)
