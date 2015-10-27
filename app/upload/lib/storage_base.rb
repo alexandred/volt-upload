@@ -8,9 +8,10 @@ class StorageBase < Volt::Model
 	field :format, String
 
 	@@container_hash = {}
+	@@default_container = :db
 
 	def self.get_default_container
-		@@default_container || :db
+		@@default_container
 	end
 	
 	def self.default_container(container)
